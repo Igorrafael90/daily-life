@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Itim } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const font = Itim({
+const font = Inter({
   subsets: ["latin"],
   weight: "400"
 });
