@@ -1,16 +1,30 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Insertlist, Loadinglist } from "../../../utils/functionlists";
+import { Lists } from "../../../utils/interface";
 
 export default function Tarefas() {
     const [Modelist, setmodelist] = useState(false)
+    const [Titlelist, settitlelist] = useState("")
+    const [Listtask, setlisttask] = useState<Lists[]>([])
+
+    useEffect(() => {
+        const fetchLists = async () => {
+            const LI = await Loadinglist()
+            setlisttask(LI)
+        }
+
+        fetchLists()
+    }, [])
+
     return (
         <>
             {Modelist == true ? (
                 <section className="w-full h-full absolute bg-[#000000ad] flex items-center justify-center">
                     <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[20%] h-36">
-                        <form className="w-full h-full p-4 space-y-2 flex flex-col">
+                        <form className="w-full h-full p-4 space-y-2 flex flex-col" onSubmit={(e) => { e.preventDefault(); Insertlist(Titlelist, settitlelist, setlisttask) }}>
                             <label className="text-white block font-bold">Titulo</label>
-                            <input className="w-[99%] h-7 bg-white rounded-sm" type="text" placeholder="Digite o titulo da tarefa" />
+                            <input className="w-[99%] h-7 bg-white rounded-sm" type="text" value={Titlelist} onChange={(e) => settitlelist(e.target.value)} placeholder="Digite o titulo da lista de tarefas" />
                             <div className="w-full flex justify-between">
                                 <button type="submit" className="transition-all bg-linear-to-r from-[#F9D849] to-[#FFE883] cursor-pointer rounded-sm w-20 h-7 shadow-s2 font-bold hover:scale-108">CONFIRM</button>
                                 <button type="submit" className="transition-all bg-linear-to-r from-[#f94949] to-[#ff8383] cursor-pointer rounded-sm w-20 h-7 shadow-s3 font-bold hover:scale-108" onClick={() => setmodelist(false)}>CANCEL</button>
@@ -29,8 +43,16 @@ export default function Tarefas() {
                 </div>
             </header>
             <main className="w-full h-full flex justify-center mt-10">
-                <section className="w-[90%] h-[80%] bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl">
-
+                <section className="p-4 flex overflow-x-auto space-x-4 w-[90%] h-[80%] bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl">
+                    {Listtask.length == 0 ? (
+                        <p className="text-white">Sem Listas</p>
+                    ) : (
+                        Listtask.map((guardado, index) => (
+                            <div key={index} className="w-[25%] h-[99%] bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl p-4">
+                                <h1 className="text-white uppercase">{guardado.Title}</h1>
+                            </div>
+                        ))
+                    )}
                 </section>
             </main>
         </>

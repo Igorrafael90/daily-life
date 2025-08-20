@@ -8,9 +8,6 @@ export const Registeruser = async (
     Confpassword: string,
 ) => {
 
-    console.log("=== Registeruser chamada ===");
-    console.log({ Email, Confemail, Password, Confpassword });
-
     if (!Email || !Confemail || !Password || !Confpassword) {
         alert("Preencha todos os campos")
         return null

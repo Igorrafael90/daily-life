@@ -1,5 +1,5 @@
 export interface Lists{
-    id: string,
+    id?: string,
     Title: string
 }
 
