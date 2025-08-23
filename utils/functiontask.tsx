@@ -1,4 +1,4 @@
-import { addDoc, collection, getDoc, getDocs, orderBy, query, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, serverTimestamp } from "firebase/firestore";
 import { Tasks } from "./interface";
 import { db } from "../firebase";
 
@@ -24,13 +24,31 @@ export const Insertask = async (
     try {
         const docref = await addDoc(collection(db, "Listas", listId, "Tasks"), Newinserttask)
         settasklist(prev =>
-            [...prev, { ...Newinserttask, id: docref.id }]
+            [...prev, { ...Newinserttask, id: docref.id }]//para o carregamento sem que haja ler todas as tasks fazendo o problema de recarregar a pagina para resolver
         );
 
         settitletask("")
         setcontenttask("")
     } catch (error: any) {
         alert("Não foi possível cadastra a tarefa" + error)
+    }
+}
+
+export const Removetask = async(
+    id: string,
+    listId: string,
+    settasklist: React.Dispatch<React.SetStateAction<Tasks[]>>
+) => {
+    if(!id){
+        alert("Tarefa não encontrada")
+        return null
+    }
+
+    try{
+        await deleteDoc(doc(db, "Listas", listId, "Tasks", id))
+        settasklist(prev => prev.filter(task => task.id !== id)) //versão mais rapida que ao invés de puxar tudo para apagar apenas uma, filtra ela
+    }catch(error: any){
+        alert("Não foi possível apagar a tarefa")
     }
 }
 
