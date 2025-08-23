@@ -1,10 +1,12 @@
-export interface Lists{
+export interface Lists {
     id: string,
     Title: string
 }
 
-export interface Tasks{
+export interface Tasks {
     id: string,
     Title: string,
-    Content: string
+    Content: string,
+    listId: string,
+    Data: any
 }
