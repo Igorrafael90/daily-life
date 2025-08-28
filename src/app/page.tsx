@@ -16,10 +16,16 @@ export default function Home() {
 
     if (Mode) {
       const res = await Registeruser(Email, Confemail, Password, Confpassword)
-      if (res) router.push('/Tarefas/')
+      if (res){
+        localStorage.setItem("uid",res.uid)
+        router.push('/Tarefas/')
+      }
     } else {
       const res = await Loginuser(Email, Password)
-      if (res) router.push('/Tarefas/')
+      if (res) {
+        localStorage.setItem("uid", res.uid)
+        router.push('/Tarefas/')
+      }
     }
   }
 

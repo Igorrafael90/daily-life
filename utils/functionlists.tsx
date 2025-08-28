@@ -8,18 +8,21 @@ export const Insertlist = async (
     settitlelist: React.Dispatch<React.SetStateAction<string>>,
     setlisttask: React.Dispatch<React.SetStateAction<Lists[]>>
 ) => {
+    const uid = localStorage.getItem("uid")
+    if (!uid) return
+
     if (!Titlelist) {
         alert("Por favor digite um titulo")
         return null
     }
 
-    const Newinsertlist: Omit<Lists, "id"> & {Data: any}= { //Omit serve para resolver o problema de colocar algum campo obrigatorio como o id
+    const Newinsertlist: Omit<Lists, "id"> & { Data: any } = { //Omit serve para resolver o problema de colocar algum campo obrigatorio como o id
         Title: Titlelist,
         Data: serverTimestamp()
     }
 
     try {
-        await addDoc(collection(db, "Lists"), Newinsertlist)
+        await addDoc(collection(db, "Users", uid, "Lists"), Newinsertlist)
         const novalista = await Loadinglist()
         setlisttask(novalista)
 
@@ -33,23 +36,29 @@ export const Removelist = async (
     id: string,
     setlisttask: React.Dispatch<React.SetStateAction<Lists[]>>
 ) => {
+    const uid = localStorage.getItem("uid")
+    if (!uid) return
+
     if (!id) {
         alert("Lista não achada")
         return null
     }
 
-    try{
-        await deleteDoc(doc(db,"Lists", id))
+    try {
+        await deleteDoc(doc(db, "Users", uid, "Lists", id))
         const novalista = await Loadinglist()
         setlisttask(novalista)
-    }catch(error: any){
+    } catch (error: any) {
         console.log("Error ao apagar a lista " + error)
     }
 }
 
 export const Loadinglist = async () => {
+    const uid = localStorage.getItem("uid")
+    if (!uid) return []
+
     try {
-        const q = query (collection(db, "Lists"), orderBy("Data", "asc"))
+        const q = query(collection(db,"Users", uid, "Lists"), orderBy("Data", "asc"))
         const Listregister = await getDocs(q)
         const lista = Listregister.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Lists[]
         return lista

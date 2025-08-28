@@ -5,6 +5,7 @@ import { Lists, Tasks } from "../../../utils/interface";
 import { faXmarkCircle, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Insertask, Loadingtask, Removetask } from "../../../utils/functiontask";
+import router from "next/router";
 
 export default function Tarefas() {
     const [Modelist, setmodelist] = useState(false)
@@ -19,6 +20,12 @@ export default function Tarefas() {
     const [Conflista, setconflist] = useState(false)
 
     useEffect(() => {
+        const uid = localStorage.getItem("uid")
+        if(!uid){
+            router.push("/")
+            return
+        }
+
         const fetchlistandtasks = async () => {
             const listas = await Loadinglist()
             setlisttask(listas)
@@ -32,7 +39,8 @@ export default function Tarefas() {
         }
 
         fetchlistandtasks()
-    }, [])
+        
+    }, [router])
 
     return (
         <>

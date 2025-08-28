@@ -34,9 +34,10 @@ export const Registeruser = async (
     }
 
     try {
-        await createUserWithEmailAndPassword(auth, Email.toLowerCase().trim(), Password)
-        alert("Usuario cadastrado")
-        return { user: Email.toLowerCase().trim(), password: Password }
+        const userauth = await createUserWithEmailAndPassword(auth, Email.toLowerCase().trim(), Password)
+        const user = userauth.user
+        return { uid: user.uid, user: Email.toLowerCase().trim(), password: Password }
+        alert("Cadastrado com sucesso")
     } catch (error: any) {
         alert("Error ao cadastrar " + error.message)
         return null
@@ -55,8 +56,9 @@ export const Loginuser = async (
     }
 
     try {
-        await signInWithEmailAndPassword(auth, Email.toLowerCase().trim(), Password)
-        return { user: Email.toLowerCase().trim(), password: Password }
+        const userauth = await signInWithEmailAndPassword(auth, Email.toLowerCase().trim(), Password)
+        const user = userauth.user
+        return { uid: user.uid, user: Email.toLowerCase().trim(), password: Password }
     } catch (error: any) {
         alert("Error ao logar" + error.message)
         return null

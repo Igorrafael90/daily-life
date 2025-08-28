@@ -10,6 +10,9 @@ export const Insertask = async (
     settitletask: React.Dispatch<React.SetStateAction<string>>,
     setcontenttask: React.Dispatch<React.SetStateAction<string>>
 ) => {
+    const uid = localStorage.getItem("uid")
+    if (!uid) return
+
     if (!Titletask || !Contenttask) {
         alert("Preencha todos os campos")
     }
@@ -22,7 +25,7 @@ export const Insertask = async (
     }
 
     try {
-        const docref = await addDoc(collection(db, "Listas", listId, "Tasks"), Newinserttask)
+        const docref = await addDoc(collection(db, "Users", uid, "Listas", listId, "Tasks"), Newinserttask)
         settasklist(prev =>
             [...prev, { ...Newinserttask, id: docref.id }]//para o carregamento sem que haja ler todas as tasks fazendo o problema de recarregar a pagina para resolver
         );
@@ -34,20 +37,23 @@ export const Insertask = async (
     }
 }
 
-export const Removetask = async(
+export const Removetask = async (
     id: string,
     listId: string,
     settasklist: React.Dispatch<React.SetStateAction<Tasks[]>>
 ) => {
-    if(!id){
+    const uid = localStorage.getItem("uid")
+    if (!uid) return
+
+    if (!id) {
         alert("Tarefa não encontrada")
         return null
     }
 
-    try{
-        await deleteDoc(doc(db, "Listas", listId, "Tasks", id))
+    try {
+        await deleteDoc(doc(db, "Users", uid, "Listas", listId, "Tasks", id))
         settasklist(prev => prev.filter(task => task.id !== id)) //versão mais rapida que ao invés de puxar tudo para apagar apenas uma, filtra ela
-    }catch(error: any){
+    } catch (error: any) {
         alert("Não foi possível apagar a tarefa")
     }
 }
@@ -55,8 +61,11 @@ export const Removetask = async(
 export const Loadingtask = async (
     lisId: string
 ) => {
+    const uid = localStorage.getItem("uid")
+    if (!uid) return []
+
     try {
-        const q = query(collection(db, "Listas", lisId, "Tasks"), orderBy("Data", "asc"))
+        const q = query(collection(db,"Users", uid, "Listas", lisId, "Tasks"), orderBy("Data", "asc"))
         const Taskregister = await getDocs(q)
         const lista = Taskregister.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Tasks[]
         return lista
