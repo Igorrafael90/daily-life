@@ -6,9 +6,11 @@ export const Insertask = async (
     listId: string,
     Titletask: string,
     Contenttask: string,
+    Prioritytask: string,
     settasklist: React.Dispatch<React.SetStateAction<Tasks[]>>,
     settitletask: React.Dispatch<React.SetStateAction<string>>,
-    setcontenttask: React.Dispatch<React.SetStateAction<string>>
+    setcontenttask: React.Dispatch<React.SetStateAction<string>>,
+    setprioritytask: React.Dispatch<React.SetStateAction<string>>
 ) => {
     const uid = localStorage.getItem("uid")
     if (!uid) return
@@ -21,7 +23,8 @@ export const Insertask = async (
         Title: Titletask,
         Content: Contenttask,
         Data: serverTimestamp(),
-        listId: listId
+        listId: listId,
+        Priority: Prioritytask
     }
 
     try {
@@ -32,6 +35,7 @@ export const Insertask = async (
 
         settitletask("")
         setcontenttask("")
+        setprioritytask("")
     } catch (error: any) {
         alert("Não foi possível cadastra a tarefa" + error)
     }

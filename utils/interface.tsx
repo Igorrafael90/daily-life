@@ -8,5 +8,21 @@ export interface Tasks {
     Title: string,
     Content: string,
     listId: string,
-    Data: any
+    Data: any,
+    Priority: string
 }
+
+export const Priority = [
+    {
+        id: 1,
+        Priority: 'Normal'
+    },
+    {
+        id: 2,
+        Priority: 'Médio'
+    },
+    {
+        id: 3,
+        Priority: 'Extremo'
+    },
+]
