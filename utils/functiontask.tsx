@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore";
 import { Tasks } from "./interface";
 import { db } from "../firebase";
 
@@ -59,6 +59,34 @@ export const Removetask = async (
         settasklist(prev => prev.filter(task => task.id !== id)) //versão mais rapida que ao invés de puxar tudo para apagar apenas uma, filtra ela
     } catch (error: any) {
         alert("Não foi possível apagar a tarefa")
+    }
+}
+
+export const Altertask = async (
+    id: string,
+    listId: string,
+    Newcontenttask: string,
+    setnewcontenttask: React.Dispatch<React.SetStateAction<string>>,
+    settasklist: React.Dispatch<React.SetStateAction<Tasks[]>>
+) => {
+    const uid = localStorage.getItem("uid")
+    if(!uid) return
+
+    if(!Newcontenttask){
+        alert("O campo do novo conteudo está vazio")
+    }
+
+    try{
+        const Newcon = doc(db, "Users", uid, "Listas", listId, "Tasks", id)
+        await updateDoc(Newcon, {
+            Content: Newcontenttask
+        })
+        const alter = await Loadingtask(listId)
+        settasklist(alter)
+
+        setnewcontenttask("")
+    }catch(error: any){
+        alert("Não foi possível alterar a tarefa")
     }
 }
 
