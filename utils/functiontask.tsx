@@ -1,5 +1,5 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, serverTimestamp, updateDoc } from "firebase/firestore";
-import { Tasks } from "./interface";
+import { Priority, Tasks } from "./interface";
 import { db } from "../firebase";
 
 export const Insertask = async (
@@ -15,8 +15,9 @@ export const Insertask = async (
     const uid = localStorage.getItem("uid")
     if (!uid) return
 
-    if (!Titletask || !Contenttask) {
+    if (!Titletask || !Contenttask || !Prioritytask) {
         alert("Preencha todos os campos")
+        return
     }
 
     const Newinserttask: Omit<Tasks, "id"> & { Data: any } = {
@@ -65,26 +66,35 @@ export const Removetask = async (
 export const Altertask = async (
     id: string,
     listId: string,
+    Newtitletask: string,
     Newcontenttask: string,
+    Newprioritytask: string,
+    setnewtitletask: React.Dispatch<React.SetStateAction<string>>,
     setnewcontenttask: React.Dispatch<React.SetStateAction<string>>,
+    setnewprioritytask: React.Dispatch<React.SetStateAction<string>>,
     settasklist: React.Dispatch<React.SetStateAction<Tasks[]>>
 ) => {
     const uid = localStorage.getItem("uid")
     if(!uid) return
 
-    if(!Newcontenttask){
-        alert("O campo do novo conteudo está vazio")
+    if(!Newcontenttask || !Newtitletask || !Newprioritytask){
+        alert("Algum campo está vazio")
+        return
     }
 
     try{
         const Newcon = doc(db, "Users", uid, "Listas", listId, "Tasks", id)
         await updateDoc(Newcon, {
-            Content: Newcontenttask
+            Title: Newtitletask,
+            Content: Newcontenttask,
+            Priority: Newprioritytask
         })
         const alter = await Loadingtask(listId)
         settasklist(alter)
 
+        setnewtitletask("")
         setnewcontenttask("")
+        setnewprioritytask("")
     }catch(error: any){
         alert("Não foi possível alterar a tarefa")
     }
