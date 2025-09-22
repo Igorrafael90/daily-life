@@ -2,11 +2,12 @@
 import { useEffect, useState } from "react";
 import { Insertlist, Loadinglist, Removelist } from "../../../utils/functionlists";
 import { Lists, Tasks, Priority } from "../../../utils/interface";
-import { faXmarkCircle, faPlus, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faXmarkCircle, faPlus, faPen, faFile } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Altertask, Insertask, Loadingtask, Removetask } from "../../../utils/functiontask";
 import router from "next/router";
 import Link from "next/link";
+import { ExportPDF } from "../../../utils/functionfile";
 
 export default function Tarefas() {
     const [Modelist, setmodelist] = useState(false)
@@ -151,7 +152,10 @@ export default function Tarefas() {
                     <button className="transition-all bg-linear-to-r from-[#F9D849] to-[#FFE883] cursor-pointer rounded-sm w-32 h-6 shadow-s2 font-black hover:scale-108" onClick={() => setmodelist(true)}>NEW LIST</button>
                 </div>
             </header>
-            <main className="w-full h-full flex justify-center mt-10">
+            <main className="w-full h-full flex items-center mt-5 flex-col space-y-2">
+                <section className="w-[90%] flex">
+                    <FontAwesomeIcon className="text-2xl text-white hover:text-gray-300 cursor-pointer" icon={faFile} onClick={() => ExportPDF(Listtask, Tasklist)}/>
+                </section>
                 <section className="p-4 flex overflow-x-auto space-x-4 w-[90%] h-[80%] bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl">
                     {Listtask.length == 0 ? (
                         <p className="text-white">Sem Listas</p>
