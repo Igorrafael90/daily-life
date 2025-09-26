@@ -7,19 +7,31 @@
   --shadow-s2: 0px 4px 25px 0px #F9D849;
   --shadow-s3: 0px 4px 25px 0px #FF0000;
   --shadow-s4: 0px 0px 6px 0px #FFFFFF;
+  --breakpoint-cellm: 431px;
+  --breakpoint-cell: 600px;
+  --breakpoint-cell2: 780px;
+  --breakpoint-cell3: 1280px;
 }
-
+  
 body {
   background-color: #000000;
   height: 100vh;
 }
 
-.scale{
+.scale {
   animation: grow 1.3s ease-in-out;
 }
 
 @keyframes grow {
-  0% { transform: scale(0.2);}
-  50% { transform: scale(1.05);}
-  100% { transform: scale(1);}
+  0% {
+    transform: scale(0.2);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }

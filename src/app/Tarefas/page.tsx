@@ -54,7 +54,7 @@ export default function Tarefas() {
         <>
             {Modelist == true ? (
                 <section className="w-full h-full absolute bg-[#000000ad] flex items-center justify-center indent-px">
-                    <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[20%] h-36">
+                    <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[20%] h-36 max-cell3:w-52">
                         <form className="w-full h-full p-4 space-y-2 flex flex-col" onSubmit={(e) => { e.preventDefault(); Insertlist(Titlelist, settitlelist, setlisttask); setmodelist(false) }}>
                             <label className="text-white block font-bold">Titulo</label>
                             <input className="w-[99%] h-7 bg-white rounded-sm" type="text" value={Titlelist} onChange={(e) => settitlelist(e.target.value)} placeholder="Digite o titulo da lista de tarefas" />
@@ -70,7 +70,7 @@ export default function Tarefas() {
             )}
             {Modetask == true ? (
                 <section className="w-full h-full absolute bg-[#000000ad] flex items-center justify-center indent-px">
-                    <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[30%] h-auto">
+                    <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[30%] h-auto max-cell3:w-80">
                         <form className="w-full h-full p-4 space-y-2 flex flex-col" onSubmit={(e) => { e.preventDefault(); Insertask(ListId, Titletask, Contenttask, Prioritytask, settasklist, settitletask, setcontenttask, setprioritytask); setmodetask(false) }}>
                             <label className="text-white block font-bold">Titulo</label>
                             <input className="w-[99%] h-7 bg-white rounded-sm" type="text" value={Titletask} onChange={(e) => settitletask(e.target.value)} placeholder="Digite o titulo da tarefa" />
@@ -95,7 +95,7 @@ export default function Tarefas() {
             )}
             {Moderecontent == true ? (
                 <section className="w-full h-full absolute bg-[#000000ad] flex items-center justify-center indent-px">
-                    <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[30%] h-auto">
+                    <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[30%] h-auto max-cell3:w-80">
                         <form className="w-full h-full p-4 space-y-2 flex flex-col" onSubmit={(e) => { e.preventDefault(); Altertask(Idtask, ListId, Newtitletask, Newcontentask, Newprioritytask, setnewtitletask, setnewcontenttask, setnewprioritytask, settasklist); setmoderecontent(false) }}>
                             <label className="text-white block font-bold">Novo Titulo</label>
                             <input type="text" className="w-[99%] h-7 bg-white rounded-sm" placeholder="Digite o novo titulo" value={Newtitletask} onChange={(e) => setnewtitletask(e.target.value)} />
@@ -120,7 +120,7 @@ export default function Tarefas() {
             )}
             {Conflist == true ? (
                 <section className="w-full h-full absolute bg-[#000000ad] flex items-center justify-center indent-px">
-                    <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[30%] h-auto p-4 space-y-5">
+                    <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[30%] h-auto p-4 space-y-5 max-cell3:w-52">
                         <h1 className="text-white text-xl text-center">Tem certeza que quer apagar a lista</h1>
                         <div className="w-full flex justify-between">
                             <button className="transition-all bg-linear-to-r from-[#F9D849] to-[#FFE883] cursor-pointer rounded-sm w-20 h-7 shadow-s2 font-bold hover:scale-108" onClick={(e) => { e.preventDefault(); Removelist(ListId, setlisttask), setconflist(false) }}>CONFIRM</button>
@@ -133,7 +133,7 @@ export default function Tarefas() {
             )}
             {Conftask == true ? (
                 <section className="w-full h-full absolute bg-[#000000ad] flex items-center justify-center indent-px">
-                    <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[30%] h-auto p-4 space-y-5">
+                    <div className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[30%] h-auto p-4 space-y-5 max-cell3:w-52">
                         <h1 className="text-white text-xl text-center">Tem certeza que quer apagar essa tarefa</h1>
                         <div className="w-full flex justify-between">
                             <button className="transition-all bg-linear-to-r from-[#F9D849] to-[#FFE883] cursor-pointer rounded-sm w-20 h-7 shadow-s2 font-bold hover:scale-108" onClick={(e) => { e.preventDefault(); Removetask(Idtask, ListId, settasklist), setconftask(false) }}>CONFIRM</button>
@@ -161,7 +161,7 @@ export default function Tarefas() {
                         <p className="text-white">Sem Listas</p>
                     ) : (
                         Listtask.map((guardado, index) => (
-                            <div key={index} className="w-[25%] h-[99%] bg-linear-to-bl from-[#000000] to-[#151515] shadow-s4 rounded-2xl p-4 shrink-0 flex-col space-y-4 overflow-y-auto">
+                            <div key={index} className="w-[25%] h-[99%] bg-linear-to-bl from-[#000000] to-[#151515] shadow-s4 rounded-2xl p-4 shrink-0 flex-col space-y-4 overflow-y-auto max-cell3:w-72">
                                 <div className="flex justify-between">
                                     <h1 className="text-white uppercase">{guardado.Title}</h1>
                                     <div className="flex space-x-3">

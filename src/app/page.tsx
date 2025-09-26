@@ -35,12 +35,12 @@ export default function Home() {
         <h1 className="text-white font-extrabold text-2xl ml-3">DAILY LIFE</h1>
       </header>
       <main className="flex flex-col space-y-3 items-center justify-center w-full h-full">
-        <div className="w-[20%] flex justify-between">
+        <div className="w-[20%] flex justify-between max-cell3:w-52">
           <button className="transition-all bg-linear-to-r from-[#F9D849] to-[#FFE883] cursor-pointer rounded-sm w-20 h-7 shadow-s2 font-black hover:scale-108" onClick={() => setMode(true)}>Register</button>
           <button className="transition-all bg-linear-to-r from-[#F9D849] to-[#FFE883] cursor-pointer rounded-sm w-20 h-7 shadow-s2 font-black hover:scale-108" onClick={() => setMode(false)}>Login</button>
         </div>
         {Mode == true ? (
-          <div key="login" className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[20%] h-96">
+          <div key="register" className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[20%] h-96 max-cell3:w-52">
             <form className="w-full h-full p-4 space-y-2 flex flex-col" onSubmit={handlesubmit}>
               <label className="text-white block font-bold">E-mail</label>
               <input className="w-[99%] h-7 bg-white rounded-sm" value={Email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Digite seu E-mail" />
@@ -56,7 +56,7 @@ export default function Home() {
             </form>
           </div>
         ) : (
-          <div key="register" className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[20%] h-56">
+          <div key="login" className="scale bg-linear-to-bl from-[#000000] to-[#151515] shadow-s1 rounded-2xl w-[20%] h-56 max-cell3:w-52">
             <form className="w-full h-full p-4 space-y-2 flex flex-col" onSubmit={handlesubmit}>
               <label className="text-white block font-bold">E-mail</label>
               <input className="w-[99%] h-7 bg-white rounded-sm" value={Email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Digite seu E-mail" />
